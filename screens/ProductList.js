@@ -15,30 +15,37 @@ import {
   Footer
 } from "native-base";
 import { Image } from "react-native";
+import NumericInput from "react-native-numeric-input";
 
 // Redux Dependencies
 import axios from "axios";
 import { connect } from "react-redux";
 import { ALL_PRODUCTS } from "../redux/actions/product";
 
-class ProductList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-      active: "true"
-    };
-  }
+// Set server
+import {ip} from '../setServer'
 
+class ProductList extends Component {
+  state = {
+    value: 0
+  };
   componentDidMount() {
     this.props.dispatch(ALL_PRODUCTS());
+  }
+
+  handleSubmit() {
+    axios.patch(ip+"/api/v1/order", {
+        
+    }).then(res => {
+      this.props.dispatch(ALL_PRODUCTS());
+    });
+    this.state.value(0)
   }
 
   render() {
     return (
       <Container>
         <Content>
-
           {this.props.product.results.map((product, index) => (
             <Card key={index} style={{ padding: 10 }}>
               {/* Image Section */}
@@ -59,10 +66,25 @@ class ProductList extends Component {
                 <Text>{product.price}</Text>
               </CardItem>
 
+              {/* Qty Section */}
+              <CardItem bordered style={{ justifyContent: "center" }}>
+                <NumericInput
+                  value={this.state.value}
+                  // onChange={value => this.setState({value})}
+                //   rightButtonBackgroundColor="#EA3788"
+                //   leftButtonBackgroundColor="#E56B70"
+                />
+              </CardItem>
+
               {/* Button Section */}
               <CardItem>
                 <Body>
-                  <Button full warning rounded>
+                  <Button
+                    full
+                    warning
+                    rounded
+                    onPress={() => this.handleSubmit()}
+                  >
                     <Text style={{ fontSize: 20 }}>
                       Add to Cart &nbsp;{" "}
                       <Icon style={{ color: "white" }} name="cart" />
@@ -72,17 +94,17 @@ class ProductList extends Component {
               </CardItem>
             </Card>
           ))}
-          {/* <Fab
-            active={this.state.active}
-            direction="up"
-            containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF' }}
-            position="bottomRight"
-            onPress={() => this.setState({ active: !this.state.active })} >
-
-            </Fab> */}
         </Content>
-        <Footer />
+        
+        {/* <Footer>
+          <Button full transparent>
+            <Text style={{ fontSize: 20, color: "white" }}>
+              View Cart &nbsp; <Icon style={{ color: "white" }} name="cash" />
+            </Text>
+          </Button>
+        </Footer> */}
+
+
       </Container>
     );
   }

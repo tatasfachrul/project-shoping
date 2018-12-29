@@ -1,0 +1,28 @@
+{
+  "name": "react-native-quantity-selector",
+  "version": "0.0.2",
+  "description": "A simple quantity selector implementation for React Native",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gcmartins93/react-native-quantity-selector"
+  },
+  "keywords": [
+    "React",
+    "Native",
+    "quantity",
+    "selector"
+  ],
+  "peerDependencies": {
+    "react-native-vector-icons": "*"
+  },
+  "author": {
+    "name": "Gabriel Custódio",
+    "email": "gcmartins93@gmail.com",
+    "url": "https://github.com/gcmartins93"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.0.0"
+  }
+}
