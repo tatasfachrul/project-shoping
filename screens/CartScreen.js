@@ -22,7 +22,7 @@ import { ALL_ORDERS } from "../redux/actions/order";
 
 class CartScreen extends Component {
   state = {
-    value: {}
+    value: 0
   };
   componentDidMount() {
     this.props.dispatch(ALL_ORDERS());
@@ -64,6 +64,17 @@ class CartScreen extends Component {
                   >
                     
                     <Text>Qty. &nbsp;{order.qty}</Text>
+                    <NumericInput
+                      initValue={order.qty}
+                      value={order.qty}
+                      editable
+                      minValue={0}
+                      step={1}
+                      onChange={(value) => this.setState({ value })}
+                      
+                //   rightButtonBackgroundColor="#EA3788"
+                //   leftButtonBackgroundColor="#E56B70"
+                  />
                   </Button>
                 </Right>
               </ListItem>

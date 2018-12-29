@@ -27,7 +27,7 @@ import {ip} from '../setServer'
 
 class ProductList extends Component {
   state = {
-    value: {},
+    value: 0,
     product_id: 0,
   };
   componentDidMount() {
@@ -47,6 +47,10 @@ class ProductList extends Component {
     });
     this.setState({ value: 0 });
   }
+
+  // handleAdd = (value) => {
+  //   this.setState({ value:value })
+  // }
 
   render() {
     return (
@@ -75,10 +79,13 @@ class ProductList extends Component {
               {/* Qty Section */}
               <CardItem bordered style={{ justifyContent: "center" }}>
                 <NumericInput
+                  initValue={this.state.value}
                   value={this.state.value}
-                  minValue={1}
+                  editable
+                  minValue={0}
                   step={1}
-                  onChange={value => this.setState({value})}
+                  onChange={(value) => this.setState({ value })}
+                  
                 //   rightButtonBackgroundColor="#EA3788"
                 //   leftButtonBackgroundColor="#E56B70"
                 />
