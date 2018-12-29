@@ -64,9 +64,9 @@ class CartScreen extends Component {
                   >
                     
                     <Text>Qty. &nbsp;{order.qty}</Text>
-                    <NumericInput
-                      initValue={order.qty}
-                      value={order.qty}
+                    <NumericInput key={index}
+                      initValue={this.state.value}
+                      value={this.state.value}
                       editable
                       minValue={0}
                       step={1}
