@@ -76,7 +76,7 @@ class ProductList extends Component {
               <CardItem bordered style={{ justifyContent: "center" }}>
                 <NumericInput
                   value={this.state.value}
-                  minValue={0}
+                  minValue={1}
                   step={1}
                   onChange={value => this.setState({value})}
                 //   rightButtonBackgroundColor="#EA3788"
