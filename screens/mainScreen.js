@@ -18,9 +18,18 @@ import axios from "axios";
 
 
 export default class homeScreen extends Component {
-  state = {
-    products: []
-  };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading: true,
+            products: []
+        }
+      }
+
+//   state = {
+//     products: []
+//   };
 
   async componentDidMount() {
     const response = await fetch(`http://192.168.43.58:3333/api/v1/products`);
