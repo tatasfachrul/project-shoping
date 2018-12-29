@@ -15,10 +15,13 @@ import {
   Footer
 } from "native-base";
 import { Image } from "react-native";
-import axios from "axios";
-// import ReactDOM from "react-dom";
 
-export default class homeScreen extends Component {
+// Redux Dependencies
+import axios from "axios";
+import { connect } from "react-redux";
+import { ALL_PRODUCTS } from "../redux/actions/product";
+
+class ProductList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,23 +30,17 @@ export default class homeScreen extends Component {
     };
   }
 
-  //   state = {
-  //     products: []
-  //   };
-
-  async componentDidMount() {
-    const response = await fetch(`http://192.168.43.58:3333/api/v1/products`);
-    const json = await response.json();
-    this.setState({ products: json });
+  componentDidMount() {
+    this.props.dispatch(ALL_PRODUCTS());
   }
 
   render() {
     return (
       <Container>
         <Content>
-          {this.state.products.map((product, index) => (
-            <Card key={index} style={{ padding: 10 }}>
 
+          {this.props.product.results.map((product, index) => (
+            <Card key={index} style={{ padding: 10 }}>
               {/* Image Section */}
               <CardItem cardBody>
                 <Image
@@ -66,7 +63,10 @@ export default class homeScreen extends Component {
               <CardItem>
                 <Body>
                   <Button full warning rounded>
-                   <Text style={{fontSize: 20}}>Add to Cart &nbsp; <Icon style={{color: 'white'}} name="cart" /></Text>
+                    <Text style={{ fontSize: 20 }}>
+                      Add to Cart &nbsp;{" "}
+                      <Icon style={{ color: "white" }} name="cart" />
+                    </Text>
                   </Button>
                 </Body>
               </CardItem>
@@ -87,3 +87,9 @@ export default class homeScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  product: state.productReducer
+});
+
+export default connect(mapStateToProps)(ProductList);
