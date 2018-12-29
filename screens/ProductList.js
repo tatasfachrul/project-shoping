@@ -27,19 +27,23 @@ import {ip} from '../setServer'
 
 class ProductList extends Component {
   state = {
-    value: 0
+    // qty: 0,
+    product_id: 0,
   };
   componentDidMount() {
     this.props.dispatch(ALL_PRODUCTS());
   }
 
-  handleSubmit() {
-    axios.patch(ip+"/api/v1/order", {
-        
+  handleSubmit(id, price) {
+    axios.post(ip+"/api/v1/order", {
+        product_id: id,
+        qty: 1,
+        price: price,
+        transaction_id: 1
     }).then(res => {
       this.props.dispatch(ALL_PRODUCTS());
     });
-    this.state.value(0)
+    // this.state.qty(0)
   }
 
   render() {
@@ -69,7 +73,7 @@ class ProductList extends Component {
               {/* Qty Section */}
               <CardItem bordered style={{ justifyContent: "center" }}>
                 <NumericInput
-                  value={this.state.value}
+                  // value={this.state.value}
                   // onChange={value => this.setState({value})}
                 //   rightButtonBackgroundColor="#EA3788"
                 //   leftButtonBackgroundColor="#E56B70"
@@ -83,7 +87,7 @@ class ProductList extends Component {
                     full
                     warning
                     rounded
-                    onPress={() => this.handleSubmit()}
+                    onPress={() => this.handleSubmit(product.id, product.price)}
                   >
                     <Text style={{ fontSize: 20 }}>
                       Add to Cart &nbsp;{" "}
