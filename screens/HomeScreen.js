@@ -7,6 +7,7 @@ import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigat
 
 import ProductList from './ProductList'
 import CartScreen from './CartScreen'
+// import HistoryScreen from './HistoryScreen'
 
 
 export default class HomeScreen extends Component {
@@ -26,7 +27,8 @@ export default class HomeScreen extends Component {
 
 const TabNavigator = createMaterialTopTabNavigator({
   Product: { screen: ProductList },
-  Cart: { screen: CartScreen }
+  Cart: { screen: CartScreen },
+  // History: {screen: HistoryScreen}
 
 }, {
   animationEnabled:true,

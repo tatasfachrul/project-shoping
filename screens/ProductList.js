@@ -99,11 +99,13 @@ class ProductList extends Component {
               {/* Qty Section */}
               <CardItem bordered style={{ justifyContent: "center" }}>
                 <NumericInput
-                  initValue={this.state["value"+key] || 0}
+                  key={key}
+                  initValue={this.state.value}
+                  value={this.state.value}
                   editable
                   minValue={0}
                   step={1}
-                  onChange={value => this.setState({ ["value"+key] :value })}
+                  onChange={value => this.setState({value })}
 
                   //   rightButtonBackgroundColor="#EA3788"
                   //   leftButtonBackgroundColor="#E56B70"
