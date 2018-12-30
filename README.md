@@ -1,6 +1,5 @@
 # Project Shoping
-Sample :
-![](name-of-giphy.gif)
+![video](https://github.com/tatasfachrul/project-shoping/blob/master-redux/video.gif)
 ## Development
 ### Project Setup
 ```bash
@@ -23,5 +22,5 @@ export const ip='http://<API Host>'
 ### Project Build
 move to your root project then
 ```bash
-cd android && ./gradlew assembleRelease
+npm run build
 ```
