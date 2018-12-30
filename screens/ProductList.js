@@ -31,7 +31,8 @@ import { ip } from "../setServer";
 class ProductList extends Component {
   state = {
     value: 0,
-    product_id: 0
+    product_id: 0,
+    key:[]
   };
   componentDidMount() {
     this.props.dispatch(ALL_PRODUCTS());
@@ -75,8 +76,8 @@ class ProductList extends Component {
         
         </Header>
         <Content style={{backgroundColor: '#c8d6e5'}}>
-          {this.props.product.results.map((product, index) => (
-            <Card key={index} style={{ padding: 10 }}>
+          {this.props.product.results.map((product, key) => (
+            <Card key={key} style={{ padding: 10 }}>
               {/* Image Section */}
               <CardItem cardBody>
                 <Image
@@ -98,12 +99,11 @@ class ProductList extends Component {
               {/* Qty Section */}
               <CardItem bordered style={{ justifyContent: "center" }}>
                 <NumericInput
-                  initValue={this.state.value}
-                  value={this.state.value}
+                  initValue={this.state["value"+key] || 0}
                   editable
                   minValue={0}
                   step={1}
-                  onChange={value => this.setState({ value })}
+                  onChange={value => this.setState({ ["value"+key] :value })}
 
                   //   rightButtonBackgroundColor="#EA3788"
                   //   leftButtonBackgroundColor="#E56B70"
