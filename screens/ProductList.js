@@ -23,28 +23,33 @@ import { connect } from "react-redux";
 import { ALL_PRODUCTS } from "../redux/actions/product";
 
 // Set server
-import {ip} from '../setServer'
+import { ip } from "../setServer";
+
+// Import component
+// import HeaderScreen from "./HomeScreen"
 
 class ProductList extends Component {
   state = {
     value: 0,
-    product_id: 0,
+    product_id: 0
   };
   componentDidMount() {
     this.props.dispatch(ALL_PRODUCTS());
   }
 
   handleSubmit(id, price, value) {
-    const hargaProduct = price * value
+    const hargaProduct = price * value;
 
-    axios.post(ip+"/api/v1/order", {
+    axios
+      .post(ip + "/api/v1/order", {
         product_id: id,
         qty: value,
         price: hargaProduct,
-        transaction_id: 1
-    }).then(res => {
-      this.props.dispatch(ALL_PRODUCTS());
-    });
+        // transaction_id: 1
+      })
+      .then(res => {
+        this.props.dispatch(ALL_PRODUCTS());
+      });
     this.setState({ value: 0 });
   }
 
@@ -55,6 +60,7 @@ class ProductList extends Component {
   render() {
     return (
       <Container>
+        {/* <HeaderScreen /> */}
         <Content>
           {this.props.product.results.map((product, index) => (
             <Card key={index} style={{ padding: 10 }}>
@@ -84,12 +90,11 @@ class ProductList extends Component {
                   editable
                   minValue={0}
                   step={1}
-                  onChange={(value) => this.setState({ value })}
-                  
-                //   rightButtonBackgroundColor="#EA3788"
-                //   leftButtonBackgroundColor="#E56B70"
+                  onChange={value => this.setState({ value })}
+
+                  //   rightButtonBackgroundColor="#EA3788"
+                  //   leftButtonBackgroundColor="#E56B70"
                 />
-                
               </CardItem>
 
               {/* Button Section */}
@@ -99,7 +104,13 @@ class ProductList extends Component {
                     full
                     warning
                     rounded
-                    onPress={() => this.handleSubmit(product.id, product.price, this.state.value)}
+                    onPress={() =>
+                      this.handleSubmit(
+                        product.id,
+                        product.price,
+                        this.state.value
+                      )
+                    }
                   >
                     <Text style={{ fontSize: 20 }}>
                       Add to Cart &nbsp;{" "}
@@ -111,16 +122,8 @@ class ProductList extends Component {
             </Card>
           ))}
         </Content>
+
         
-        {/* <Footer>
-          <Button full transparent>
-            <Text style={{ fontSize: 20, color: "white" }}>
-              View Cart &nbsp; <Icon style={{ color: "white" }} name="cash" />
-            </Text>
-          </Button>
-        </Footer> */}
-
-
       </Container>
     );
   }
