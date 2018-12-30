@@ -30,7 +30,8 @@ class CartScreen extends Component {
   state = {
     sumAll: 0,
     value: 0,
-    price: 0
+    price: 0,
+    key:[]
   };
   componentDidMount() {
     this.props.dispatch(ALL_ORDERS());
@@ -45,7 +46,6 @@ class CartScreen extends Component {
     let err = false;
     let res = null;
 
-    // console.warn(total);
 
     axios
       .post(`${ip}/api/v1/transaction/`, {
@@ -53,7 +53,6 @@ class CartScreen extends Component {
       })
       .then(res => {
         this.checkout(res.data.id);
-        // console.warn(res.data.id);
       });
   };
 
@@ -63,41 +62,40 @@ class CartScreen extends Component {
 
     this.props.order.results.map(async rescart => {
       try {
-        res = await axios.patch( `${ip}/api/v1/order/` + rescart.id, {
+        res = await axios.patch(`${ip}/api/v1/order/` + rescart.id, {
           transaction_id: transaction_id
         });
       } catch (error) {
         err = error.message;
-        console.warn(err)
+        console.warn(err);
       }
 
       if (err) {
         alert("Checkout Failed");
-        // console.warn(err)
-        // console.warn(transaction_id);
       } else {
         alert("Checkout Success");
       }
     });
   }
 
-  // handleClick(id, price) {
-  //   axios.post('http://192.168.43.58:3333/api/v1/order', {
-  //       product_id: id,
-  //       qty: 1,
-  //       price: price,
-  //       transaction_id: 1
-  //   }).then(res => {
-  //     this.props.dispatch(ALL_PRODUCTS());
-  //   });
-  // }
+  handleDelete = event => {
+       
+    axios.delete(`http://192.168.43.58:3333/api/v1/order/${event}`)
+    .then(res => {
+        console.log(res);
+        console.log(res.data);
+    }).then(res => {
+        this.props.dispatch(ALL_ORDERS());
+    })
+}
+
 
   render() {
     return (
       <Container>
         <Content>
-          {this.props.order.results.map((order, index) => (
-            <List key={index}>
+          {this.props.order.results.map((order, key) => (
+            <List key={key}>
               <ListItem thumbnail>
                 <Left>
                   <Thumbnail square source={{ uri: order.product.image_url }} />
@@ -109,26 +107,22 @@ class CartScreen extends Component {
                   </Text>
                 </Body>
                 <Right>
-                  <Button
+                  {/* <Button
                     outline
                     rounded
                     transparent
-                    // onPress={() => this.handleClick(product.id, product.price)}
-                  >
+                  > */}
                     <Text>Qty. &nbsp;{order.qty}</Text>
                     <NumericInput
-                      key={index}
-                      initValue={this.state.value}
-                      value={this.state.value}
+                      key={key}
+                      initValue={this.state["value"+key] || order.qty}
                       editable
                       minValue={0}
                       step={1}
-                      onChange={value => this.setState({ value, key })}
+                      onChange={value => this.setState({ ["value"+key] :value  })}
 
-                      //   rightButtonBackgroundColor="#EA3788"
-                      //   leftButtonBackgroundColor="#E56B70"
                     />
-                  </Button>
+                  {/* </Button> */}
                 </Right>
               </ListItem>
             </List>
@@ -143,8 +137,8 @@ class CartScreen extends Component {
                   onPress={() => this.handleCheckout()}
                 >
                   <Text style={{ fontSize: 20 }}>
-                    Checkout &nbsp;{" "}
-                    {/* <Icon style={{ color: "white" }} name="cart" /> */}
+                    Checkout &nbsp;
+                    <Icon style={{ color: "white" }} name="cash" />
                   </Text>
                 </Button>
               </Body>

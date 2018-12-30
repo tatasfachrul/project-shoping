@@ -60,8 +60,21 @@ class ProductList extends Component {
   render() {
     return (
       <Container>
+        
         {/* <HeaderScreen /> */}
-        <Content>
+        <Header style={{backgroundColor: '#2e86de'}}>
+        <Left>
+        <Icon style={{ color: "white" }} name="menu" />
+        </Left>
+        <Body style={{alignContent: "center",}}>
+          <Text style={{alignContent: "center", color:'#f5f6fa'}}>Product List</Text>
+        </Body>
+        <Right>
+        <Icon style={{ color: "white" }} name="person" />
+        </Right>
+        
+        </Header>
+        <Content style={{backgroundColor: '#c8d6e5'}}>
           {this.props.product.results.map((product, index) => (
             <Card key={index} style={{ padding: 10 }}>
               {/* Image Section */}
@@ -79,7 +92,7 @@ class ProductList extends Component {
                 <Text>{product.name}</Text>
               </CardItem>
               <CardItem bordered>
-                <Text>{product.price}</Text>
+                <Text>Rp. &nbsp;{product.price}</Text>
               </CardItem>
 
               {/* Qty Section */}
