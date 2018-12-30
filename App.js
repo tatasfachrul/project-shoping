@@ -1,61 +1,39 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import MainApp from "./screens/mainScreen";
+import MainApp from "./screens/HomeScreen";
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
-const styles = StyleSheet.create({
-  image: {
-    width: 320,
-    height: 320
-  }
-});
+import { Provider } from 'react-redux'
+import store from './redux/store'
+import ProductList from './screens/ProductList'
+import HomeScreen from "./screens/HomeScreen";
 
-const slides = [
+
+const RootStack = createStackNavigator(
   {
-    key: "somethun",
-    title: "Welcome",
-    text: "Welcome to TapTap\nThe most absurd game you've ever played!\n LOL!",
-    // image: require("./assets/1.jpg"),
-    imageStyle: styles.image,
-    backgroundColor: "#59b2ab"
+    Home: HomeScreen
   },
   {
-    key: "somethun-dos",
-    title: "Play",
-    text: "Play the game, and feel the awkwardness",
-    // image: require("./assets/2.jpg"),
-    imageStyle: styles.image,
-    backgroundColor: "#e84118"
-  },
-  {
-    key: "somethun1",
-    title: "Rewards",
-    text: "Get Rewards\n\nEVERY WEEK!!!",
-    // image: require("./assets/3.jpg"),
-    imageStyle: styles.image,
-    backgroundColor: "#22bcb5"
+    initialRouteName: 'Home',
   }
-];
+)
 
-export default class introApp extends React.Component {
-  state = {
-    // Set True for MainApp, False for Introduction
-    showRealApp: true
-  };
+const AppContainer = createAppContainer(RootStack);
 
-  _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    this.setState({ showRealApp: true });
-  };
-
+export default class App extends React.Component {
   render() {
-    if (this.state.showRealApp) {
-      return <MainApp />;
-    } else {
-      return (
-        <AppIntroSlider slides={slides} onDone={this._onDone} showSkipButton />
-      );
-    }
+    return <AppContainer />;
   }
 }
+
+// export default class App extends Component {
+
+//   render(){
+//     return (
+//       <Provider store={store}>
+//         <ProductList/>
+//       </Provider>
+//     )
+//   }
+// }
