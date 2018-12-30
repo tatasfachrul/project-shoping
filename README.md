@@ -1,9 +1,10 @@
 # Project Shoping
+![](name-of-giphy.gif)
 ## Development
 ### Project Setup
 ```bash
 https://git.arkademy.com/tatasfachrul/project-shopping.git
-npm install
+npm install --save
 ```
 
 ### Start development
