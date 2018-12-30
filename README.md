@@ -1,5 +1,5 @@
 # Project Shoping
-![](name-of-giphy.gif)
+![video](https://github.com/tatasfachrul/project-shoping/blob/master-redux/video.gif)
 ## Development
 ### Project Setup
 ```bash
