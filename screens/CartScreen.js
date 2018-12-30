@@ -13,7 +13,11 @@ import {
   Button,
   Card,
   CardItem,
-  Icon
+  Icon,
+  Segment,
+  Header,
+  Tab,
+  Tabs
 } from "native-base";
 import { Image } from "react-native";
 import NumericInput from "react-native-numeric-input";
@@ -31,7 +35,7 @@ class CartScreen extends Component {
     sumAll: 0,
     value: 0,
     price: 0,
-    key:[]
+    key: []
   };
   componentDidMount() {
     this.props.dispatch(ALL_ORDERS());
@@ -45,7 +49,6 @@ class CartScreen extends Component {
     let total = this.state.sumAll;
     let err = false;
     let res = null;
-
 
     axios
       .post(`${ip}/api/v1/transaction/`, {
@@ -79,20 +82,29 @@ class CartScreen extends Component {
   }
 
   handleDelete = event => {
-       
-    axios.delete(`http://192.168.43.58:3333/api/v1/order/${event}`)
-    .then(res => {
+    axios
+      .delete(`http://192.168.43.58:3333/api/v1/order/${event}`)
+      .then(res => {
         console.log(res);
         console.log(res.data);
-    }).then(res => {
+      })
+      .then(res => {
         this.props.dispatch(ALL_ORDERS());
-    })
-}
-
+      });
+  };
 
   render() {
     return (
       <Container>
+        {/* <Tabs>
+          <Tab heading="Cart">
+            
+          </Tab>
+          <Tab heading="History">
+            
+          </Tab>
+          
+        </Tabs> */}
         <Content>
           {this.props.order.results.map((order, key) => (
             <List key={key}>
@@ -105,24 +117,27 @@ class CartScreen extends Component {
                   <Text note numberOfLines={1}>
                     Rp. {order.product.price}
                   </Text>
+                  <Text>Qty. &nbsp;{order.qty}</Text>
+                  <NumericInput
+                    key={key}
+                    initValue={this.state["value" + key] || order.qty}
+                    editable
+                    minValue={0}
+                    step={1}
+                    onChange={value =>
+                      this.setState({ ["value" + key]: value })
+                    }
+                  />
                 </Body>
                 <Right>
-                  {/* <Button
+                  
+                  <Button
                     outline
                     rounded
-                    transparent
-                  > */}
-                    <Text>Qty. &nbsp;{order.qty}</Text>
-                    <NumericInput
-                      key={key}
-                      initValue={this.state["value"+key] || order.qty}
-                      editable
-                      minValue={0}
-                      step={1}
-                      onChange={value => this.setState({ ["value"+key] :value  })}
-
-                    />
-                  {/* </Button> */}
+                    onPress={() => this.handleDelete(order.id)}
+                  >
+                    <Text>Delete</Text>
+                  </Button>
                 </Right>
               </ListItem>
             </List>
