@@ -1,4 +1,4 @@
-apply plugin: "com.android.application"
+    apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
 
@@ -98,18 +98,15 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     signingConfigs {
-release {
-storeFile file(MYAPP_RELEASE_STORE_FILE)
-storePassword MYAPP_RELEASE_STORE_PASSWORD
-keyAlias MYAPP_RELEASE_KEY_ALIAS
-keyPassword MYAPP_RELEASE_K EY_PASSWORD
-}
-}
-buildTypes {
-release {
-signingConfig signingConfigs.release
-}
-}
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
 
 
     defaultConfig {
@@ -134,6 +131,7 @@ signingConfig signingConfigs.release
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -149,6 +147,9 @@ signingConfig signingConfigs.release
             }
         }
     }
+
+     
+
 }
 
 dependencies {
