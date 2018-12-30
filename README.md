@@ -1,4 +1,5 @@
 # Project Shoping
+Sample :
 ![](name-of-giphy.gif)
 ## Development
 ### Project Setup
@@ -20,6 +21,7 @@ export const ip='http://<API Host>'
 
 ## Build
 ### Project Build
+move to your root project then
 ```bash
-npm run build
+cd android && ./gradlew assembleRelease
 ```
